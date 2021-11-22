@@ -1,18 +1,23 @@
 package com.aungbophyoe.space.timerdemo
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import com.aungbophyoe.space.timerdemo.model.TimeEvent
+import com.aungbophyoe.space.timerdemo.services.TestService
 import com.aungbophyoe.space.timerdemo.services.TimerService
 import com.aungbophyoe.space.timerdemo.utils.Constants
 import com.aungbophyoe.space.timerdemo.utils.TimerUtil
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var isTimerRunning = false
     private val fab by lazy {
@@ -21,11 +26,13 @@ class MainActivity : AppCompatActivity() {
     private val tvTime by lazy {
         findViewById<TextView>(R.id.tvTime)
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fab.setOnClickListener{
             toggleTimer()
+            /*startService(Intent(this,TestService::class.java))*/
         }
         timerObserver()
     }
